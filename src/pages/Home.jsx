@@ -1,7 +1,6 @@
-import MovieCard from "../components/MovieCard"
-import { useState, useEffect } from "react"
+import MovieCard from "../components/MovieCard";
+import { useState, useEffect } from "react";
 import { searchMovies, getPopularMovies } from "../services/api";
-
 
 function Home() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -12,69 +11,76 @@ function Home() {
     useEffect(() => {
         const loadPopularMovies = async () => {
             try {
-                const popularMovies = await getPopularMovies()
-                setMovies(popularMovies)
-                //console.log(popularMovies)
+                const popularMovies = await getPopularMovies();
+                setMovies(popularMovies);
+                setError(null);
             } catch (error) {
-                console.log(error)
-                setError("Failed to load movies")
+                console.log(error);
+                setError("Impossibile caricare i film popolari.");
+            } finally {
+                setLoading(false);
             }
-            finally {
-                setLoading(false)
-            }
-        }
-        loadPopularMovies()
-    }, [])
-
+        };
+        loadPopularMovies();
+    }, []);
 
     const handleSearch = async (e) => {
-        e.preventDefault()
-        if (!searchQuery.trim()) return
-        if (loading) return
+        e.preventDefault();
+        if (!searchQuery.trim() || loading) return;
 
-        setLoading(true)
+        setLoading(true);
         try {
-            const searchResult = await searchMovies(searchQuery)
-            setMovies(searchResult)
-            setError(null)
+            const searchResult = await searchMovies(searchQuery);
+            setMovies(searchResult);
+            setError(null);
         } catch (err) {
             console.log(err);
-            setError("Failed to search movie")
+            setError("Errore durante la ricerca del film.");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
-    const handleChange = (e) => {
-        setSearchQuery(e.target.value)
-    }
+    const handleChange = (e) => setSearchQuery(e.target.value);
+
     return (
-
         <div className="home">
-            <form onSubmit={handleSearch} className="search-form">
-                <input
-                    type="text"
-                    placeholder="Cerca film.."
-                    className="search-input"
-                    value={searchQuery}
-                    onChange={handleChange}
-                />
-                <button type="submit" className="search-btn">Search</button>
-            </form>
-
-            {error && <div className="error-message">{error}</div>}
-
-
-            {loading ? (<div className="loading">Loading...</div>) : (
-                <div className="movie-grid">
-                    {movies.map((movie) => (
-                        <MovieCard movie={movie} key={movie.id} />
-                    ))}
+            <div className="container">
+                <div className="search-wrap">
+                    <form onSubmit={handleSearch} className="search-form" role="search" aria-label="Cerca film">
+                        <input
+                            type="text"
+                            placeholder="Cerca film..."
+                            className="search-input"
+                            value={searchQuery}
+                            onChange={handleChange}
+                            aria-label="Campo di ricerca"
+                        />
+                        <button type="submit" className="search-btn" disabled={loading}>
+                            {loading ? "Carico..." : "🔍 Cerca"}
+                        </button>
+                    </form>
                 </div>
-            )}
-        </div>
 
-    )
+                {error && <div className="error-message" role="alert">{error}</div>}
+
+                {loading ? (
+                    <div className="loading" aria-live="polite">
+                        <div className="spinner" /> Caricamento in corso...
+                    </div>
+                ) : (
+                    <>
+                        <h2 className="section-title">Film</h2>
+                        <div className="movie-grid">
+                            {movies.map((movie) => (
+                                <MovieCard movie={movie} key={movie.id} />
+                            ))}
+                        </div>
+                    </>
+                )}
+            </div>
+        </div>
+    );
 }
 
-export default Home
+export default Home;
