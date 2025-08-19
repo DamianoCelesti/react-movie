@@ -1,108 +1,97 @@
-# Movie Explorer
+# 🎬 Movie Explorer  
 
-Un'applicazione React per esplorare film popolari e gestire una lista di preferiti. Si collega al database di [The Movie Database (TMDb)](https://www.themoviedb.org/) per mostrare i film più popolari e permette di cercare nuovi titoli.
+> Applicazione **React** per esplorare i film più popolari, cercare nuovi titoli e gestire una lista di preferiti.  
+> Alimentata da [The Movie Database (TMDb)](https://www.themoviedb.org/).  
 
----
-
-## 🔧 Requisiti e Dipendenze
-
-- Node.js (consigliato: >= 18.x)
-- npm
-
-Dipendenze principali (già incluse in `package.json`, da installare con `npm install`):
-
-- `react`
-- `react-dom`
-- `react-router-dom`
+![React](https://img.shields.io/badge/React-18-blue?logo=react)  
+![Vite](https://img.shields.io/badge/Vite-5-purple?logo=vite)  
+![License](https://img.shields.io/badge/License-MIT-green)  
 
 ---
 
-## 🚀 Installazione ed Esecuzione
+## ✨ Funzionalità  
 
-1. **Clona il progetto** o copia i file nel tuo ambiente locale.
+- 📺 **Film Popolari**: caricamento automatico dei titoli più visti da TMDb  
+- 🔍 **Ricerca**: cerca film tramite titolo  
+- ❤️ **Preferiti**: aggiungi/rimuovi film e salvali in `localStorage`  
+- 🌐 **Routing**: navigazione tra *Home* e *Preferiti* con React Router  
+- ⚡ **UX migliorata**: gestione errori e stato di caricamento  
 
-2. **Installa le dipendenze**:
+---
 
+## 🛠️ Tecnologie Utilizzate  
+
+- [React 18](https://react.dev/)  
+- [Vite](https://vitejs.dev/)  
+- [React Router DOM](https://reactrouter.com/)  
+- Context API (per stato globale dei preferiti)  
+- [TMDb API](https://developer.themoviedb.org/docs)  
+
+---
+
+## 🚀 Installazione  
+
+ **Clona la repository**  
    ```bash
-   npm install
-   ```
-
-3. **Avvia il server di sviluppo**:
-
-   ```bash
-   npm run dev
-   ```
-
-4. **Apri il browser** su `http://localhost:5173`.
-
----
-
-## 💡 Esempio di Utilizzo
-
-### ✅ Caricamento Film Popolari
-Aprendo la home, vengono caricati i film più popolari da TMDb.
-
-### 🔍 Ricerca Film
-Nel campo di input scrivi ad esempio `Inception`, premi "Search" → (attualmente mostra un alert con il testo cercato).
-
-### ❤️ Aggiunta ai Preferiti
-Clicca sull’icona `♥` su una card film (al momento attiva solo un alert).
-
----
-
-## 🧩 Struttura e Componenti Principali
-
-- **App.jsx**  
-  Inizializza il routing tra `Home` e `Favorites`, e include la barra di navigazione.
-
-- **pages/Home.jsx**  
-  Visualizza film popolari e contiene il modulo di ricerca. Usa `getPopularMovies` da `api.js`.
-
-- **pages/Favorites.jsx**  
-  Placeholder statico per la pagina dei preferiti.
-
-- **components/NavBar.jsx**  
-  Barra di navigazione semplice con link a "Home" e "Favorites".
-
-- **components/MovieCard.jsx**  
-  Rappresentazione visiva di ogni film, mostra titolo, data e poster. Include un pulsante `♥` (clic = alert).
-
-- **services/api.js**  
-  Contiene:
-  - `getPopularMovies`: richiede i film popolari.
-  - `searchMovies`: cerca i film.
-
----
+   git clone https://github.com/tuo-username/movie-explorer.git
+   cd movie-explorer
+ ```
+Installa le dipendenze
+```bash
+npm install
+```
 
 
-## 📂 Struttura delle Cartelle
+
+Crea un file .env
+e aggiungi la tua API key personale:
+```bash
+const API_KEY = la_tua_api_key
+```
+
+Avvia il progetto in locale
+```bash
+npm run dev
+```
+
+L’app sarà disponibile su: http://localhost:5173
+
+## 📂 Struttura del Progetto  
 
 ```
+movie-explorer/
 ├── App.jsx
-├── assets/
-│   └── react.svg
-├── components/
-│   ├── MovieCard.jsx
-│   └── NavBar.jsx
 ├── main.jsx
+├── contexts/
+│ └── MovieContext.jsx
 ├── pages/
-│   ├── Favorites.jsx
-│   └── Home.jsx
+│ ├── Favorites.jsx
+│ └── Home.jsx
+├── components/
+│ ├── NavBar.jsx
+│ └── MovieCard.jsx
 ├── services/
-│   └── api.js
+│ └── api.js 
+└── ...
 ```
 
----
+- **App.jsx** → definisce il routing e avvolge tutto in `MovieProvider`  
+- **contexts/MovieContext.jsx** → gestisce i preferiti con persistenza in `localStorage`  
+- **pages/Home.jsx** → film popolari e ricerca  
+- **pages/Favorites.jsx** → lista preferiti salvati  
+- **components/MovieCard.jsx** → card con poster, titolo, anno e pulsante preferiti  
+- **services/api.js** → funzioni per interrogare TMDb
 
-## 📌 To-Do / Miglioramenti Futuri
 
-- [ ] Completare funzionalità "Preferiti"
-- [ ] Salvare preferiti su `localStorage`
-- [ ] Aggiornare stile CSS globale
+## 📌 Miglioramenti
+
+ - Creare pagina dettaglio film con info aggiuntive
 
 
----
 
 ## 📜 Licenza
 
-Distribuito per scopi educativi o personali. TMDb è utilizzato solo come fonte dati.
+Questo progetto è distribuito sotto licenza MIT.
+Fonte dati: TMDb
+
+
